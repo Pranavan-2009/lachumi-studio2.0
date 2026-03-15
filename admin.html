@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin</title>
+</head>
+
+<body>
+
+<h1>Bookings</h1>
+
+<table border="1" id="t">
+
+<tr>
+
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>Service</th>
+<th>Date</th>
+<th>Time</th>
+<th>Details</th>
+
+</tr>
+
+</table>
+
+<script>
+
+var data=JSON.parse(localStorage.getItem("bookings")||"[]");
+
+var t=document.getElementById("t");
+
+data.forEach(function(b){
+
+var r=t.insertRow();
+
+r.insertCell().innerText=b.name;
+r.insertCell().innerText=b.email;
+r.insertCell().innerText=b.phone;
+r.insertCell().innerText=b.service;
+r.insertCell().innerText=b.date;
+r.insertCell().innerText=b.time;
+r.insertCell().innerText=b.details;
+
+});
+
+</script>
+
+</body>
+</html>
