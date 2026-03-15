@@ -1,94 +1,526 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Lachumi Studio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lachumi Studio – Capturing Moments, Creating Magic</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, Helvetica, sans-serif; background: #f8f8f8; color: #333; }
+    a { text-decoration: none; }
+    img { max-width: 100%; }
 
-<style>
+    /* ── NAVBAR ── */
+    header { position: sticky; top: 0; z-index: 999; background: #322f2f; color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .nav-top { display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+    .nav-brand h1 { font-size: 1.5rem; font-weight: 800; color: white; }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { color: #ddd; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: #ff9800; }
+    .nav-links a.book-btn { background: #ff9800; color: white; padding: 6px 16px; border-radius: 5px; font-weight: 700; }
+    .nav-links a.book-btn:hover { background: #e68900; }
+    .nav-red { background: #ff004c; text-align: center; padding: 8px 0; }
+    .nav-red a { color: white; margin: 0 14px; font-size: 0.9rem; font-weight: 500; }
+    .nav-red a:hover { color: #ff9800; }
+    .hamburger { display: none; background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; }
+    .mobile-menu { display: none; flex-direction: column; gap: 12px; background: #ff004c; padding: 16px 24px; }
+    .mobile-menu a { color: white; font-weight: 500; font-size: 1rem; }
+    .mobile-menu.open { display: flex; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-red { display: none; }
+      .hamburger { display: block; }
+    }
 
-body{
-font-family: Arial;
-background:#111;
-color:white;
-text-align:center;
-}
+    /* ── HERO ── */
+    .hero { background: linear-gradient(135deg, #d81b60 0%, #ff004c 50%, #c62828 100%); color: white; padding: 80px 20px; text-align: center; }
+    .hero h2 { font-size: 3em; font-weight: 800; margin-bottom: 12px; }
+    .hero p { font-size: 1.5em; margin-bottom: 30px; }
+    .hero-btn { display: inline-block; background: #ff9800; color: white; padding: 14px 36px; border-radius: 6px; font-weight: bold; font-size: 1.1em; transition: background 0.3s; }
+    .hero-btn:hover { background: #e68900; }
 
-input,select,textarea{
-width:80%;
-padding:8px;
-margin:5px;
-}
+    /* ── WHY CHOOSE US ── */
+    .why { padding: 50px 20px; background: #fcfcfc; }
+    .why h3 { font-size: 2em; color: #d81b60; margin-bottom: 30px; text-align: center; }
+    .cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1000px; margin: auto; }
+    .card { flex: 1 1 250px; padding: 24px; background: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; }
+    .card .icon { font-size: 2.5rem; margin-bottom: 10px; }
+    .card h4 { color: #444; margin-bottom: 8px; }
+    .card p { color: #666; }
 
-button{
-padding:10px;
-background:orange;
-border:none;
-}
+    /* ── FEATURED ── */
+    .featured { padding: 60px 20px; background: #fff8f5; }
+    .featured h2 { font-size: 2.5em; color: #c62828; margin-bottom: 40px; text-align: center; }
+    .featured-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 30px; }
+    .featured-grid img { border-radius: 8px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .featured-grid iframe { border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .see-gallery { text-align: center; }
+    .see-gallery a { background: #c62828; color: white; padding: 10px 28px; border-radius: 5px; font-weight: bold; }
 
-</style>
+    /* ── ABOUT ── */
+    #about { padding: 60px 20px; background: #fff8f5; }
+    #about h2 { font-size: 2.5em; color: #c62828; margin-bottom: 40px; text-align: center; }
+    #about p { font-size: 1.1em; line-height: 1.9; margin-bottom: 20px; text-align: justify; color: #444; max-width: 1000px; margin-left: auto; margin-right: auto; }
+
+    /* ── SERVICES ── */
+    #services { padding: 60px 20px; background: #fff3e0; }
+    #services h2 { font-size: 2.5em; color: #c62828; margin-bottom: 40px; text-align: center; }
+    .services-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1200px; margin: auto; }
+    .service-card { flex: 1 1 280px; background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
+    .service-card .sicon { font-size: 3rem; margin-bottom: 15px; }
+    .service-card h3 { color: #d84315; margin-bottom: 10px; }
+    .service-card p { color: #555; }
+
+    /* ── GALLERY ── */
+    #gallery { padding: 60px 20px; background: #fff8f0; }
+    #gallery h2 { font-size: 2.5em; color: #c62828; margin-bottom: 40px; text-align: center; }
+    .slider-wrap { max-width: 900px; margin: auto; position: relative; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+    .slider-wrap img { width: 100%; height: 500px; object-fit: cover; display: block; }
+    .slide-caption { position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.45); color: #f2f2f2; text-align: center; padding: 10px; font-size: 1.1em; }
+    .prev-btn, .next-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; font-size: 28px; padding: 16px 12px; cursor: pointer; }
+    .prev-btn { left: 0; border-radius: 0 4px 4px 0; }
+    .next-btn { right: 0; border-radius: 4px 0 0 4px; }
+    .dots { text-align: center; padding: 20px 0 40px; }
+    .dot { display: inline-block; width: 15px; height: 15px; border-radius: 50%; background: #bbb; margin: 0 4px; cursor: pointer; transition: background 0.3s; }
+    .dot.active { background: #717171; }
+    .videos { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+    .videos h3 { font-size: 1.8em; color: #d84315; margin-bottom: 20px; text-align: center; }
+    .videos iframe { border-radius: 8px; }
+
+    /* ── CONTACT ── */
+    #contact { padding: 60px 20px; background: #fff8f0; }
+    #contact h2 { font-size: 2.5em; color: #c62828; margin-bottom: 30px; text-align: center; }
+    .contact-wrap { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; max-width: 1100px; margin: auto; }
+    .contact-info { flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .contact-info h3 { color: #d84315; margin-bottom: 20px; text-align: center; }
+    .contact-info p { margin-bottom: 14px; line-height: 1.6; }
+    .contact-info h4 { color: #d84315; margin: 20px 0 10px; text-align: center; }
+    .contact-form-box { flex: 2 1 400px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .contact-form-box h3 { color: #d84315; margin-bottom: 20px; text-align: center; }
+    .contact-form-box form { display: flex; flex-direction: column; gap: 16px; }
+    .contact-form-box input, .contact-form-box textarea {
+      padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; font-family: inherit;
+    }
+    .map-wrap { margin-top: 40px; text-align: center; max-width: 1100px; margin: 40px auto 0; }
+    .map-wrap h4 { color: #b71c1c; margin-bottom: 15px; }
+
+    /* ── BOOKING ── */
+    #booking { padding: 60px 20px; background: #f8f8f8; }
+    .booking-box { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border: 4px solid #ffcc00; }
+    .booking-box h2 { text-align: center; color: #c62828; margin-bottom: 24px; font-size: 1.8em; }
+    .booking-box form { display: flex; flex-direction: column; gap: 16px; }
+    .booking-box label { display: block; margin-bottom: 5px; font-weight: bold; color: #444; }
+    .booking-box input, .booking-box select, .booking-box textarea {
+      width: 100%; padding: 12px; border: 1.5px solid #ccc; border-radius: 10px; font-size: 16px; font-family: inherit;
+    }
+
+    /* ── BUTTONS ── */
+    .submit-btn {
+      padding: 13px; background: #c62828; color: white; border: none;
+      border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; transition: background 0.2s;
+    }
+    .submit-btn:hover { background: #a31515; }
+    .submit-btn-lg {
+      padding: 14px; background: #c62828; color: white; border: none;
+      border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; transition: background 0.2s;
+    }
+    .submit-btn-lg:hover { background: #a31515; }
+
+    /* ── FOOTER ── */
+    footer { background: #1c1c1c; color: #f0f0f0; padding: 40px 20px; }
+    .footer-inner { max-width: 1000px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; }
+    .footer-col h3 { color: #ff9800; font-size: 1.2rem; margin-bottom: 10px; }
+    .footer-col h4 { color: #ff9800; margin-bottom: 12px; }
+    .footer-col p { line-height: 1.7; color: #ccc; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { color: #ccc; }
+    .footer-col ul li a:hover { color: white; }
+    .social-icons { display: flex; gap: 12px; margin-top: 8px; }
+    .footer-bottom { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #333; font-size: 0.9em; color: #aaa; }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed; bottom: 25px; right: 25px; background: #25D366;
+      color: white; border-radius: 50%; width: 56px; height: 56px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.3); z-index: 1000;
+    }
+    .wa-float svg { width: 30px; height: 30px; fill: white; }
+
+    /* ── BACK TO TOP ── */
+    #backToTop {
+      display: none; position: fixed; bottom: 90px; right: 25px;
+      background: #c62828; color: white; border: none; border-radius: 50%;
+      width: 44px; height: 44px; font-size: 1.4rem; cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.3); z-index: 1000;
+    }
+    #backToTop.visible { display: flex; align-items: center; justify-content: center; }
+
+    /* ── SUCCESS BANNER ── */
+    .success-msg { display: none; background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; padding: 12px 16px; border-radius: 8px; text-align: center; font-weight: bold; }
+    .success-msg.show { display: block; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @media (max-width: 600px) {
+      .hero h2 { font-size: 2em; }
+      .slider-wrap img { height: 250px; }
+      .videos iframe { width: 100%; height: 220px; }
+      .featured-grid iframe { width: 100%; height: 220px; }
+    }
+  </style>
 </head>
-
 <body>
 
-<h1>Lachumi Studio Booking</h1>
+<!-- ══════════════ HEADER ══════════════ -->
+<header>
+  <div class="nav-top">
+    <div class="nav-brand">
+      <img src="images/logo.jpg" alt="Lachumi Studio Logo" onerror="this.style.display='none'" />
+      <h1>Lachumi Studio</h1>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#booking" class="book-btn">Book Now</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">&#9776;</button>
+  </div>
+  <div class="nav-red">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+    <a href="#booking">Book Now</a>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home" onclick="closeMenu()">Home</a>
+    <a href="#about" onclick="closeMenu()">About</a>
+    <a href="#services" onclick="closeMenu()">Services</a>
+    <a href="#gallery" onclick="closeMenu()">Gallery</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+    <a href="#booking" onclick="closeMenu()">Book Now</a>
+  </div>
+</header>
 
-<form id="bookingForm">
+<!-- ══════════════ HERO ══════════════ -->
+<section id="home">
+  <div class="hero">
+    <h2>Welcome to Lachumi Studio</h2>
+    <p>Capturing Moments, Creating Magic</p>
+    <a href="#booking" class="hero-btn">Book Your Shoot Today</a>
+  </div>
 
-<input id="bName" placeholder="Name" required><br>
+  <!-- Why Choose Us -->
+  <div class="why">
+    <h3>Why Choose Us?</h3>
+    <div class="cards">
+      <div class="card"><div class="icon">❤️</div><h4>Passion for Art</h4><p>Every shot is a masterpiece.</p></div>
+      <div class="card"><div class="icon">👥</div><h4>Experienced Team</h4><p>Professionals dedicated to quality.</p></div>
+      <div class="card"><div class="icon">🏆</div><h4>Custom Solutions</h4><p>Packages tailored to your needs.</p></div>
+    </div>
+  </div>
 
-<input id="bEmail" placeholder="Email"><br>
+  <!-- Featured Moments -->
+  <div class="featured">
+    <h2>Featured Moments</h2>
+    <div class="featured-grid">
+      <img src="images/visiting-card.jpg" alt="Visiting Card Design" style="width:500px;height:300px;" onerror="this.style.display='none'" />
+      <img src="images/portrait.jpg" alt="Portrait" style="width:360px;height:460px;" onerror="this.style.display='none'" />
+      <img src="images/pongal-1.jpg" alt="Pongal Design" style="width:480px;height:380px;" onerror="this.style.display='none'" />
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/YcEytpNhnc0" title="Lachumi Studio Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="see-gallery"><a href="#gallery">See Full Gallery</a></div>
+  </div>
+</section>
 
-<input id="bPhone" placeholder="Phone"><br>
+<!-- ══════════════ ABOUT ══════════════ -->
+<section id="about">
+  <h2>About Lachumi Studio</h2>
+  <p>Welcome to Lachumi Studio, where creativity meets professionalism! Since our inception in 2021, we have been dedicated to delivering high-quality photography, videography, and comprehensive digital media services. Our philosophy is simple: <strong>we capture moments, we create magic.</strong> Every project we undertake, every frame we capture is guided by our passion for storytelling and our dedication to quality.</p>
+  <p>At Lachumi Studio, we believe that every story is unique. That's why we work closely with each client to understand their vision and bring it to life with creativity and precision. Whether it's a grand celebration or a simple family moment, we ensure that the final output reflects the emotions and memories you cherish.</p>
+  <p>Our team consists of passionate photographers, skilled videographers, and talented editors who are constantly exploring new techniques and technologies to keep our work fresh and modern. We provide customized packages to suit your budget and preferences, making high-quality media services accessible to everyone.</p>
+</section>
 
-<select id="bService">
+<!-- ══════════════ SERVICES ══════════════ -->
+<section id="services">
+  <h2>Our Services</h2>
+  <div class="services-grid">
+    <div class="service-card"><div class="sicon">📷</div><h3>Photography</h3><p>Studio &amp; outdoor shoots, events, portraits – captured with creativity and quality.</p></div>
+    <div class="service-card"><div class="sicon">🎬</div><h3>Videography</h3><p>Cinematic videos for weddings, functions, and professional events.</p></div>
+    <div class="service-card"><div class="sicon">✂️</div><h3>Editing</h3><p>Photo and video editing with transitions, color correction, and effects.</p></div>
+    <div class="service-card"><div class="sicon">💻</div><h3>Web Designing</h3><p>Modern, responsive websites to build your brand online.</p></div>
+    <div class="service-card"><div class="sicon">🎨</div><h3>Graphic Designing</h3><p>Logos, posters, invitations, branding materials and more.</p></div>
+    <div class="service-card"><div class="sicon">📱</div><h3>Social Media Management</h3><p>Creating and managing content for engaging your online audience.</p></div>
+  </div>
+</section>
 
-<option>Wedding</option>
-<option>Studio</option>
-<option>Outdoor</option>
+<!-- ══════════════ GALLERY ══════════════ -->
+<section id="gallery">
+  <h2>Our Portfolio</h2>
 
-</select><br>
+  <!-- Slider -->
+  <div class="slider-wrap">
+    <img id="slideImg" src="images/visiting-card.jpg" alt="Slide" onerror="this.src=''" />
+    <div class="slide-caption" id="slideCaption">Visiting Card Design</div>
+    <button class="prev-btn" onclick="changeSlide(-1)">&#10094;</button>
+    <button class="next-btn" onclick="changeSlide(1)">&#10095;</button>
+  </div>
+  <div class="dots" id="dots"></div>
 
-<input id="bDate" type="date"><br>
+  <!-- YouTube -->
+  <h3 style="font-size:1.8em;color:#d84315;margin-bottom:20px;text-align:center;">Cinematic Work</h3>
+  <div class="videos">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/rwFGEq_PFsY?si=yFpCUl5TvOSHPGs_" title="Cinematic Work 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/BUwLKlCQoVU?si=0596Er4r06l7ZlbN" title="Cinematic Work 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</section>
 
-<input id="bTime" type="time"><br>
+<!-- ══════════════ CONTACT ══════════════ -->
+<section id="contact">
+  <h2>Get In Touch</h2>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <h3>Our Details</h3>
+      <p>📍 <strong>Address:</strong> B31, G3 N.H.S Flats, Maligawatta, Colombo-10</p>
+      <p>📞 <strong>Call:</strong> +94 77 292 0406 / +94 77 411 2406</p>
+      <p>✉️ <strong>Email:</strong> 14062021studio@gmail.com</p>
+      <h4>Working Hours</h4>
+      <p>Monday – Saturday: 9:00 AM – 6:00 PM</p>
+      <p>Sunday: Closed (Available for pre-booked events)</p>
+    </div>
+    <div class="contact-form-box">
+      <h3>Send Us a Message</h3>
+      <div class="success-msg" id="contactSuccess">✅ Message sent! We'll get back to you soon.</div>
+      <form id="contactForm">
+        <input type="text" id="cName" placeholder="Your Name" required />
+        <input type="email" id="cEmail" placeholder="Your Email" required />
+        <textarea rows="5" id="cMessage" placeholder="Your Message" required style="resize:vertical;"></textarea>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
+  </div>
+  <div class="map-wrap">
+    <h4>Our Location Map</h4>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.3160408575035!2d79.86591871477317!3d6.974917992010837!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2593f61b7f03f%3A0x6a1a1b1a1b1a1b1a!2sLachumi%20Studio!5e0!3m2!1sen!2slk!4v1628104800000!5m2!1sen!2slk"
+      width="100%" height="400" style="border:0;border-radius:8px;" allowfullscreen loading="lazy" title="Lachumi Studio Location">
+    </iframe>
+  </div>
+</section>
 
-<textarea id="bDetails"></textarea><br>
+<!-- ══════════════ BOOKING ══════════════ -->
+<section id="booking">
+  <div class="booking-box">
+    <h2>Book Your Session</h2>
+    <div class="success-msg" id="bookingSuccess">✅ Booking received! We'll confirm your session shortly.</div>
+    <form id="bookingForm">
+      <div>
+        <label>Full Name</label>
+        <input type="text" id="bName" placeholder="Your full name" required />
+      </div>
+      <div>
+        <label>Email</label>
+        <input type="email" id="bEmail" placeholder="Your email" required />
+      </div>
+      <div>
+        <label>Phone Number</label>
+        <input type="tel" id="bPhone" placeholder="Your phone number" required />
+      </div>
+      <div>
+        <label>Select Service</label>
+        <select id="bService" required>
+          <option value="">-- Choose a Service --</option>
+          <option>Photography</option>
+          <option>Videography</option>
+          <option>Editing</option>
+          <option>Web Designing</option>
+          <option>Graphic Designing</option>
+          <option>Social Media Management</option>
+          <option>Content Creating</option>
+          <option>Digital Marketing</option>
+          <option>Branding</option>
+          <option>Consultation</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label>Preferred Date</label>
+        <input type="date" id="bDate" required />
+      </div>
+      <div>
+        <label>Preferred Time</label>
+        <input type="time" id="bTime" required />
+      </div>
+      <div>
+        <label>Event Details / Special Requests</label>
+        <textarea rows="4" id="bDetails" placeholder="e.g., Wedding date, birthday package, etc." style="resize:vertical;"></textarea>
+      </div>
+      <button type="submit" class="submit-btn-lg">Submit Booking Request</button>
+    </form>
+  </div>
+</section>
 
-<button>Book</button>
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h3>Lachumi Studio</h3>
+      <p>B31, G3 N.H.S Flats,<br />Maligawatta, Colombo-10</p>
+      <p style="margin-top:10px;">📞 +94 77 292 0406 / +94 77 411 2406</p>
+      <p>📧 14062021studio@gmail.com</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#booking">Book Now</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Our Passion</h4>
+      <p style="margin-bottom:12px;">"Capturing Moments, Creating Magic"</p>
+      <p style="margin-bottom:8px;">Follow us on:</p>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/share/1BejGCjyZ4/" target="_blank" rel="noreferrer">
+          <img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook" />
+        </a>
+        <a href="https://www.instagram.com/lachumistudio2406/" target="_blank" rel="noreferrer">
+          <img src="https://cdn-icons-png.flaticon.com/24/733/733558.png" alt="Instagram" />
+        </a>
+        <a href="https://www.youtube.com/@lachumistudio2406" target="_blank" rel="noreferrer">
+          <img src="https://cdn-icons-png.flaticon.com/24/733/733597.png" alt="YouTube" />
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p id="footerYear"></p>
+  </div>
+</footer>
 
-</form>
+<!-- ══════════════ WHATSAPP FLOAT ══════════════ -->
+<a href="https://wa.me/94774112406" target="_blank" rel="noreferrer" class="wa-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 0C7.163 0 0 7.163 0 16c0 2.824.737 5.475 2.027 7.775L0 32l8.469-2.003A15.923 15.923 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.28 13.28 0 01-6.771-1.844l-.485-.289-5.026 1.188 1.211-4.894-.317-.502A13.298 13.298 0 012.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.307-9.907c-.4-.2-2.366-1.167-2.732-1.3-.366-.133-.633-.2-.9.2-.267.4-1.033 1.3-1.267 1.567-.233.267-.467.3-.867.1-.4-.2-1.69-.623-3.22-1.987-1.19-1.063-1.993-2.375-2.227-2.775-.233-.4-.025-.616.175-.816.18-.179.4-.467.6-.7.2-.233.267-.4.4-.667.133-.267.067-.5-.033-.7-.1-.2-.9-2.167-1.233-2.967-.325-.783-.655-.677-.9-.689l-.767-.013c-.267 0-.7.1-1.067.5-.367.4-1.4 1.367-1.4 3.333s1.433 3.867 1.633 4.133c.2.267 2.82 4.307 6.833 6.035.955.413 1.7.66 2.282.845.958.306 1.831.263 2.52.159.769-.115 2.366-.967 2.7-1.9.333-.933.333-1.733.233-1.9-.1-.167-.367-.267-.767-.467z"/>
+  </svg>
+</a>
 
-<h3 id="ok"></h3>
+<!-- ══════════════ BACK TO TOP ══════════════ -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to Top">&#8679;</button>
 
 <script>
+  // ── Footer year ──────────────────────────────────
+  document.getElementById("footerYear").textContent =
+    "© " + new Date().getFullYear() + " Lachumi Studio. All Rights Reserved.";
 
-document.getElementById("bookingForm").addEventListener("submit",function(e){
+  // ── Mobile menu ──────────────────────────────────
+  function toggleMenu() {
+    document.getElementById("mobileMenu").classList.toggle("open");
+  }
+  function closeMenu() {
+    document.getElementById("mobileMenu").classList.remove("open");
+  }
 
-e.preventDefault();
+  // ── Back to top ──────────────────────────────────
+  window.addEventListener("scroll", function () {
+    var btn = document.getElementById("backToTop");
+    if (window.scrollY > 400) btn.classList.add("visible");
+    else btn.classList.remove("visible");
+  });
 
-var booking={
+  // ── Gallery Slider ────────────────────────────────
+  var slides = [
+    { url: "visiting-card.jpg",  caption: "Visiting Card Design" },
+    { url: "pongal-2.jpg",       caption: "Pongal Wishing Card" },
+    { url: "pongal-3.jpg",       caption: "Thai Pongal Wishing Card" },
+    { url: "independence.jpg",   caption: "Sri Lanka Independence Day Banner" },
+    { url: "saranya-1.jpg",      caption: "Saranya Motors – Shop Board" },
+    { url: "saranya-2.jpg",      caption: "Saranya Motors – Banner" },
+  ];
+  var current = 0;
 
-name:bName.value,
-email:bEmail.value,
-phone:bPhone.value,
-service:bService.value,
-date:bDate.value,
-time:bTime.value,
-details:bDetails.value
+  function renderDots() {
+    var dotsEl = document.getElementById("dots");
+    dotsEl.innerHTML = "";
+    slides.forEach(function (_, i) {
+      var d = document.createElement("span");
+      d.className = "dot" + (i === current ? " active" : "");
+      d.onclick = function () { goSlide(i); };
+      dotsEl.appendChild(d);
+    });
+  }
+  function goSlide(n) {
+    current = (n + slides.length) % slides.length;
+    document.getElementById("slideImg").src = slides[current].url;
+    document.getElementById("slideCaption").textContent = slides[current].caption;
+    renderDots();
+  }
+  function changeSlide(dir) { goSlide(current + dir); }
+  setInterval(function () { goSlide(current + 1); }, 4000);
+  renderDots();
 
-};
+  // ── Contact form ──────────────────────────────────
+  document.getElementById("contactForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name    = document.getElementById("cName").value;
+    var email   = document.getElementById("cEmail").value;
+    var message = document.getElementById("cMessage").value;
 
-var list=JSON.parse(localStorage.getItem("bookings")||"[]");
+    // Send via mailto (opens email client)
+    var subject = encodeURIComponent("Contact from " + name + " – Lachumi Studio Website");
+    var body    = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\nMessage:\n" + message);
+    window.open("mailto:14062021studio@gmail.com?subject=" + subject + "&body=" + body);
 
-list.push(booking);
+    document.getElementById("contactSuccess").classList.add("show");
+    this.reset();
+    setTimeout(function () {
+      document.getElementById("contactSuccess").classList.remove("show");
+    }, 5000);
+  });
 
-localStorage.setItem("bookings",JSON.stringify(list));
+  // ── Booking form ──────────────────────────────────
+  document.getElementById("bookingForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name    = document.getElementById("bName").value;
+    var email   = document.getElementById("bEmail").value;
+    var phone   = document.getElementById("bPhone").value;
+    var service = document.getElementById("bService").value;
+    var date    = document.getElementById("bDate").value;
+    var time    = document.getElementById("bTime").value;
+    var details = document.getElementById("bDetails").value;
 
-ok.innerText="Booking Saved";
+    var subject = encodeURIComponent("Booking Request from " + name + " – " + service);
+    var body    = encodeURIComponent(
+      "Name: " + name +
+      "\nEmail: " + email +
+      "\nPhone: " + phone +
+      "\nService: " + service +
+      "\nDate: " + date +
+      "\nTime: " + time +
+      "\n\nDetails:\n" + details
+    );
+    window.open("mailto:14062021studio@gmail.com?subject=" + subject + "&body=" + body);
 
-this.reset();
-
-});
+    document.getElementById("bookingSuccess").classList.add("show");
+    this.reset();
+    setTimeout(function () {
+      document.getElementById("bookingSuccess").classList.remove("show");
+    }, 5000);
+  });
+</script>
+</body>
+</html>
 
 </script>
 
